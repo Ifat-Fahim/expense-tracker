@@ -21,8 +21,7 @@ form.addEventListener("submit", (e) => {
         transactions.push({ id: generateId(), text, amount });
         updateLocalStorage();
         textInput.focus();
-        textInput.value = "";
-        amountInput.value = "";
+        clearForm();
         init();
     }
 });
@@ -42,8 +41,7 @@ editBtn.addEventListener("click", () => {
     updateLocalStorage();
     init();
 
-    textInput.value = "";
-    amountInput.value = "";
+    clearForm();
 });
 
 function addTransactionToDOM(transaction) {
@@ -104,10 +102,9 @@ function removeTransaction(id) {
 function enableEdit(id) {
     document.querySelector('input[type="submit"]').classList.add("hide");
     editBtn.classList.remove("hide");
-    const selectedItem = transactions.find((item) => item.id === id);
-    selectedTransaction = selectedItem;
-    textInput.value = selectedItem.text;
-    amountInput.value = selectedItem.amount;
+    selectedTransaction = transactions.find((item) => item.id === id);
+    textInput.value = selectedTransaction.text;
+    amountInput.value = selectedTransaction.amount;
 }
 
 function generateId() {
@@ -131,6 +128,12 @@ function updateValues() {
     balance.innerText = `$${totalBalance}`;
     income.innerText = `$${totalIncome}`;
     expense.innerText = `$${totalExpense}`;
+}
+
+// clear form values
+function clearForm() {
+    textInput.value = "";
+    amountInput.value = "";
 }
 
 // update localStorage
